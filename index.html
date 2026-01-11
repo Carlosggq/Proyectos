@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CONSTRUCCIONES Y REMODELACIONES 'LUNA' – Mantenimiento, Remodelación y Render 3D</title>
+  <style>
+    :root {
+      --primary: #1f6feb;
+      --primary-dark: #174fb0;
+      --bg: #f4f5f7;
+      --text: #222222;
+      --muted: #666666;
+      --card-bg: #ffffff;
+      --accent: #00b894;
+      --radius: 14px;
+      --shadow: 0 10px 25px rgba(0,0,0,0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg,#0f172a,#1f2937);
+      color: white;
+      padding: 1rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: #e5e7eb;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0,1.4fr) minmax(0,1fr);
+      gap: 2rem;
+      padding: 2rem 1rem 2.5rem;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-text p {
+      color: var(--muted);
+      margin-bottom: 1.3rem;
+    }
+
+    .hero-highlights {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pill {
+      background: rgba(255,255,255,0.9);
+      border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.75rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .hero-actions small {
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    .hero-media {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-tag {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      background: rgba(15,23,42,0.85);
+      color: white;
+      padding: 0.25rem 0.7rem;
+      font-size: 0.75rem;
+      border-radius: 999px;
+    }
+
+    .hero-media-inner {
+      padding: 1rem;
+    }
+
+    .hero-media-thumb {
+      border-radius: 10px;
+      overflow: hidden;
+      background: linear-gradient(135deg,#1f2937,#0f172a);
+      color: #e5e7eb;
+      padding: 1rem;
+      font-size: 0.8rem;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-media-thumb h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-media-thumb p {
+      font-size: 0.8rem;
+      color: #cbd5f5;
+    }
+
+    .hero-badges {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.75rem;
+      font-size: 0.75rem;
+      opacity: 0.85;
+    }
+
+    /* SECTION GENERAL */
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.3rem;
+    }
+
+    /* SERVICIOS */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .chip {
+      display: inline-block;
+      background: #e5f2ff;
+      color: #1d4ed8;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      margin-bottom: 0.4rem;
+    }
+
+    /* CARRUSEL */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: #000;
+      max-height: 350px;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.4s ease;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      position: relative;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      height: 100%;
+      max-height: 350px;
+    }
+
+    .carousel-caption {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background: linear-gradient(to top,rgba(0,0,0,0.75),transparent);
+      color: white;
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(15,23,42,0.7);
+      border: none;
+      color: #e5e7eb;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(15,23,42,0.95);
+    }
+
+    .carousel-btn.prev {
+      left: 0.75rem;
+    }
+
+    .carousel-btn.next {
+      right: 0.75rem;
+    }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+    }
+
+    .carousel-dot.active {
+      background: white;
+      width: 16px;
+    }
+
+    /* PROCESO */
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .step {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 0.9rem;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .step-number {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .step h4 {
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .step p {
+      color: var(--muted);
+    }
+
+    /* TESTIMONIOS */
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .testimonial {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .testimonial strong {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .testimonial span {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* CONTACTO */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0,1.3fr) minmax(0,1fr);
+      gap: 1.5rem;
+    }
+
+    .contact-details p {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: var(--muted);
+    }
+
+    .contact-details a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .contact-details a:hover {
+      text-decoration: underline;
+    }
+
+    form {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      font-size: 0.9rem;
+    }
+
+    .field {
+      margin-bottom: 0.8rem;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      padding: 0.5rem 0.6rem;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-size: 0.9rem;
+    }
+
+    .field textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid #16a34a;
+      color: #166534;
+      background: #ecfdf3;
+      font-size: 0.8rem;
+      text-decoration: none;
+      margin-top: 0.5rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    @media (max-width: 800px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      header {
+        position: static;
+      }
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="logo">
+        <span>Construcciones y Remodelaciones LUNA</span> 
+      </div>
+      <nav class="nav-links">
+        <a href="#servicios">Servicios</a>
+        <a href="#galeria">Galería</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <a href="#contacto" class="btn-primary">Cotiza tu proyecto</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Soluciones integrales en mantenimiento, construcción y remodelación de viviendas y negocios.</h1>
+        <p>
+          Ejecutamos proyectos de obra civil, remodelaciones, plomería y diseño con
+          renderizado 3D para que veas el resultado antes de construir. Trabajamos con
+          materiales de calidad, mano de obra profesional y enfoque en tiempos de entrega.
+        </p>
+
+        <div class="hero-highlights">
+          <span class="pill">Remodelación de cocinas y baños</span>
+          <span class="pill">Mantenimiento residencial completo</span>
+          <span class="pill">Render 3D de propuestas</span>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#contacto" class="btn-primary">
+            Agenda una visita técnica →
+          </a>
+          <small>Escanea el código QR en tu tarjeta para llegar a esta página.</small>
+        </div>
+      </div>
+
+      <div class="hero-media">       
+        <div class="hero-media-inner">
+          <div class="hero-media-thumb">
+            <div>
+              <h3>Render 3D + ejecución real</h3>
+              <p>
+                Presentamos propuestas en 3D para que visualices la remodelación de tu
+                cocina, baño o fachada antes de iniciar la obra.
+              </p>
+            </div>
+            <div class="hero-badges">
+              <span>✔ Diseños personalizados</span>
+              <span>✔ Optimización de espacios</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="servicios">
+      <h2 class="section-title">Servicios principales</h2>
+      <p class="section-subtitle">
+        Atendemos proyectos residenciales desde trabajos puntuales de mantenimiento
+        hasta remodelaciones completas llave en mano.
+      </p>
+
+      <div class="services-grid">
+        <article class="card">
+          <div class="chip">Mantenimiento</div>
+          <h3>Mantenimiento integral de casa</h3>
+          <p>
+            Reparaciones menores, pintura, acabados, resanes, corrección de humedad,
+            sellado de filtraciones, revisión de instalaciones y ajustes generales
+            para mantener tu hogar en óptimas condiciones.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="chip">Construcción</div>
+          <h3>Obra civil y ampliaciones</h3>
+          <p>
+            Construcción de cuartos adicionales, losas, bardas, cochera, techumbres y
+            adecuaciones estructurales conforme a las necesidades del proyecto.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="chip">Remodelación</div>
+          <h3>Remodelación de interiores y exteriores</h3>
+          <p>
+            Diseño y ejecución de remodelaciones en cocinas, baños, recámaras y
+            fachadas con enfoque estético y funcional para aumentar el valor de tu propiedad.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="chip">Plomería</div>
+          <h3>Plomería residencial</h3>
+          <p>
+            Detección y reparación de fugas, cambio de tuberías, instalación de
+            muebles de baño, regaderas, tarjas, calentadores y sistemas hidráulicos básicos.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="chip">Render 3D</div>
+          <h3>Renderizado 3D de remodelaciones</h3>
+          <p>
+            Modelado y render 3D para que visualices colores, materiales y distribución
+            antes de invertir en obra. Ideal para cocinas integrales, salas, baños y fachadas.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- GALERÍA / CARRUSEL -->
+    <section id="galeria">
+      <h2 class="section-title">Galería de trabajos realizados</h2>
+      <p class="section-subtitle">
+        Algunos proyectos de remodelación, mantenimiento y propuestas 3D. 
+      </p>
+
+      <div class="carousel" id="carousel">
+        <div class="carousel-track">
+          <!-- Slide 1 -->
+          <div class="carousel-slide">
+            <img src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="Remodelación de sala y comedor" />
+            <div class="carousel-caption">
+              Remodelación de sala-comedor con cambio de pisos, iluminación y acabados en muros.
+            </div>
+          </div>
+          <!-- Slide 2 -->
+          <div class="carousel-slide">
+            <img src="https://images.pexels.com/photos/1454806/pexels-photo-1454806.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="Remodelación de cocina" />
+            <div class="carousel-caption">
+              Cocina integral: rediseño, instalación de muebles, barra y optimización de almacenamiento.
+            </div>
+          </div>
+          <!-- Slide 3 -->
+          <div class="carousel-slide">
+            <img src="https://images.pexels.com/photos/3990359/pexels-photo-3990359.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="Render 3D" />
+            <div class="carousel-caption">
+              Propuesta de render 3D para remodelación de habitación antes de ejecutar la obra.
+            </div>
+          </div>
+        </div>
+
+        <button class="carousel-btn prev" type="button" aria-label="Anterior">&#10094;</button>
+        <button class="carousel-btn next" type="button" aria-label="Siguiente">&#10095;</button>
+
+        <div class="carousel-dots">
+          <div class="carousel-dot active" data-slide="0"></div>
+          <div class="carousel-dot" data-slide="1"></div>
+          <div class="carousel-dot" data-slide="2"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO -->
+    <section id="proceso">
+      <h2 class="section-title">¿Cómo trabajamos?</h2>
+      <p class="section-subtitle">
+        Buscamos que el proceso sea claro desde el primer contacto hasta la entrega del proyecto.
+      </p>
+
+      <div class="timeline">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h4>Contacto y breve diagnóstico</h4>
+          <p>
+            Nos envías fotos, una breve descripción del trabajo y tus datos de contacto
+            para entender tu necesidad inicial.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h4>Visita técnica</h4>
+          <p>
+            Agendamos una visita para revisar medidas, condiciones del espacio y
+            alcances del proyecto.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h4>Propuesta y render 3D (opcional)</h4>
+          <p>
+            En proyectos de remodelación presentamos propuesta de diseño y, si se
+            requiere, render 3D para validar acabados y distribución.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h4>Cotización y calendario</h4>
+          <p>
+            Definimos presupuesto, tiempos de ejecución y condiciones de trabajo de forma clara y por escrito.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-number">5</div>
+          <h4>Ejecución y entrega</h4>
+          <p>
+            Ejecutamos el trabajo, damos seguimiento al avance y realizamos entrega
+            final con revisión conjunta del cliente.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section>
+      <h2 class="section-title">Opiniones de clientes</h2>
+      <p class="section-subtitle">
+        Inserta aquí comentarios reales de clientes para respaldar el trabajo realizado.
+      </p>
+
+      <div class="testimonials">
+        <div class="testimonial">
+          “Nos remodelaron la cocina completa, cumplieron con los tiempos
+          y dejaron todo limpio. El render nos ayudó mucho a decidir colores y distribución.”
+          <strong>María G.</strong>
+          <span>Remodelación de cocina</span>
+        </div>
+        <div class="testimonial">
+          “Detectaron y repararon fugas de agua en menos de un día. Muy buena atención
+          y explicación del trabajo realizado.”
+          <strong>Carlos R.</strong>
+          <span>Servicio de plomería</span>
+        </div>
+        <div class="testimonial">
+          “Realizaron ampliación de recámara con excelente calidad en acabados. Altamente recomendados.”
+          <strong>Familia López</strong>
+          <span>Ampliación y acabados</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto">
+      <h2 class="section-title">Contacto</h2>
+      <p class="section-subtitle">
+        Completa el formulario o contáctanos directamente por teléfono o WhatsApp para agendar una visita.
+      </p>
+
+      <div class="contact-grid">
+        <div class="contact-details">
+          <p><strong>Nombre comercial:</strong> Contratista & Remodelaciones</p>
+          <p><strong>Zona de servicio:</strong> [Ciudad de México y Área Metropolitana]</p>
+          <p><strong>Teléfono:</strong> <a href="tel:+5215586161671">+52 1 55 8616 1671</a></p>
+          <p><strong>Correo:</strong> <a href="mailto:contacto@contratista.com">contacto@contratista.com</a></p>
+
+          <a class="whatsapp-btn" href="https://wa.me/5215586161671?text=Hola,%20quiero%20informes%20sobre%20una%20remodelaci%C3%B3n."
+             target="_blank" rel="noopener">
+            💬 Escribir por WhatsApp
+          </a>
+        </div>
+
+        <form>
+          <div class="field">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ej. Jesus Luna" />
+          </div>
+          <div class="field">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="Ej. 55 8600 0000" />
+          </div>
+          <div class="field">
+            <label for="servicio">Tipo de trabajo</label>
+            <input type="text" id="servicio" name="servicio"
+              placeholder="Remodelación de baño, fuga de agua, ampliación, etc." />
+          </div>
+          <div class="field">
+            <label for="mensaje">Describe brevemente tu proyecto</label>
+            <textarea id="mensaje" name="mensaje"
+              placeholder="Cuéntanos qué necesitas, medidas aproximadas o problema a resolver."></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">
+            Enviar solicitud de contacto
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Construcciones y Remodelaciones LUNA. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    // Año dinámico en footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    //Formulario
+    document.getElementById("contacto").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const nombre   = document.getElementById("nombre").value.trim();
+    const telefono = document.getElementById("telefono").value.trim();
+    const servicio = document.getElementById("servicio").value.trim();
+    const mensaje  = document.getElementById("mensaje").value.trim();
+    const numero = "5215586161671"; // 52 + número
+
+    const texto = `Nueva solicitud de contacto:
+    👤 Nombre: ${nombre}
+    📞 Teléfono: ${telefono}
+    🛠️ Trabajo: ${servicio}
+    📝 Mensaje: ${mensaje}`;
+
+    const url = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + encodeURIComponent(texto);
+
+    window.location.href = url;
+    });
+
+    // Lógica sencilla del carrusel
+    const carousel = document.getElementById("carousel");
+    const track = carousel.querySelector(".carousel-track");
+    const slides = Array.from(track.children);
+    const prevBtn = carousel.querySelector(".carousel-btn.prev");
+    const nextBtn = carousel.querySelector(".carousel-btn.next");
+    const dots = Array.from(carousel.querySelectorAll(".carousel-dot"));
+    
+    let currentIndex = 0;
+
+    function updateCarousel(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+      currentIndex = index;
+      const offset = -index * 100;
+      track.style.transform = `translateX(${offset}%)`;
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === index);
+      });
+    }
+
+    prevBtn.addEventListener("click", () => {
+      updateCarousel(currentIndex - 1);
+    });
+
+    nextBtn.addEventListener("click", () => {
+      updateCarousel(currentIndex + 1);
+    });
+
+    dots.forEach(dot => {
+      dot.addEventListener("click", () => {
+        const slideIndex = parseInt(dot.dataset.slide, 10);
+        updateCarousel(slideIndex);
+      });
+    });
+
+    // Auto-play opcional
+    setInterval(() => {
+      updateCarousel(currentIndex + 1);
+    }, 7000);
+
+  </script>
+</body>
+</html>
